@@ -3,6 +3,7 @@
  * Meotodo para resolver una integral mediante el metood de SImpson
  */
 
+ 
  //Aca se ingresa la integral a realizar
 class IntegralHilo {
     public static double fx (double x){
