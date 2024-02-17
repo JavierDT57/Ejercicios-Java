@@ -6,15 +6,15 @@
  
 class Integral4Hilo {
     public static double fx (double x){
-        return x*x+1;
-        
+        return Math.exp(x*x);//Integral
      }
+     
     public static void main(String[] args) {
         double suma, x0, xn, h;
-        int n;
+        long n;// Se cambio el tipo de dato de n a long al igual en el constructor de los hilos
         x0 = 1;
         xn = 2;
-        n = 1000000;
+        n = (long) (Math.pow(2, 32) / 2);//Se cambia el valor de n, al solicitado por el profesor
         h = (xn-x0)/n;
         //Hilos par
         HiloSumaPar hilo1 = new HiloSumaPar("Par", x0, xn, n);
