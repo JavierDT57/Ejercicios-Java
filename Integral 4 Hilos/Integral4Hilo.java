@@ -17,11 +17,11 @@ class Integral4Hilo {
         n = (long) (Math.pow(2, 32) / 2);//Se cambia el valor de n, al solicitado por el profesor
         h = (xn-x0)/n;
         //Hilos par
-        HiloSumaPar hilo1 = new HiloSumaPar("Par", x0, xn, n);
-        HiloSumaPar hilo2 = new HiloSumaPar("Par2", x0, xn, n);
+        Hilo1SumaPar hilo1 = new Hilo1SumaPar("Par", x0, xn, n);
+        Hilo2SumaPar hilo2 = new Hilo2SumaPar("Par2", x0, xn, n);
         //Hilos impar
-        HiloSumaImpar hilo3 = new HiloSumaImpar("Impar", x0, xn, n);
-        HiloSumaImpar hilo4 = new HiloSumaImpar("Impar2", x0, xn, n);
+        Hilo3SumaImpar hilo3 = new Hilo3SumaImpar("Impar", x0, xn, n);
+        Hilo4SumaImpar hilo4 = new Hilo4SumaImpar("Impar2", x0, xn, n);
 
         hilo1.start();
         hilo2.start();
@@ -42,14 +42,15 @@ class Integral4Hilo {
 
 
 
-    /**
-     * HiloSumaPar
-     */
-    static class HiloSumaPar extends Thread {
-        private double suma, x0, xn;
-        private int n;
 
-        HiloSumaPar(String mensaje, double x0, double xn, int n) {
+    /**
+     * Hilo1SumaPar
+     */
+    static class Hilo1SumaPar extends Thread {
+        private double suma, x0, xn;
+        private long n;
+
+        Hilo1SumaPar(String mensaje, double x0, double xn, long n) {
             super(mensaje);
             suma = 0;
             this.x0 = x0;
@@ -59,7 +60,7 @@ class Integral4Hilo {
 
 
         public double fx (double x){
-            return x*x+1;
+            return Math.exp(x*x);//Integral
         }
 
         @Override
@@ -82,20 +83,19 @@ class Integral4Hilo {
         public double suma() {
             return suma;
         }
-    } // end class HiloSumaPar
+    } // end class Hilo1SumaPar
+
 
 
 
     /**
-     * HiloSumaImPar
+     * Hilo2SumaPar
      */
-    static class HiloSumaImpar extends Thread {
+    static class Hilo2SumaPar extends Thread {
         private double suma, x0, xn;
-        private int n;
+        private long n;
 
-
-
-        HiloSumaImpar(String mensaje, double x0, double xn, int n) {
+        Hilo2SumaPar(String mensaje, double x0, double xn, long n) {
             super(mensaje);
             suma = 0;
             this.x0 = x0;
@@ -105,7 +105,54 @@ class Integral4Hilo {
 
 
         public double fx (double x){
-            return x*x+1;
+            return Math.exp(x*x);//Integral
+        }
+
+        @Override
+        public void run() {
+            double xi, h;
+            h = (xn-x0)/n;
+
+            for (int i = 2; i <= n-2; i += 2) {
+                xi = x0 + i *h;
+                suma += fx(xi);
+            }
+            
+            suma = suma*2;
+
+
+            System.out.println(getName() + ":" + suma);
+            System.out.println("Hilo finalizado: " + getName());
+        }
+
+        public double suma() {
+            return suma;
+        }
+    } // end class Hilo2SumaPar
+
+
+
+
+    /**
+     * Hilo3SumaImPar
+     */
+    static class Hilo3SumaImpar extends Thread {
+        private double suma, x0, xn;
+        private long n;
+
+
+
+        Hilo3SumaImpar(String mensaje, double x0, double xn, long n) {
+            super(mensaje);
+            suma = 0;
+            this.x0 = x0;
+            this.xn = xn;
+            this.n = n;
+        }
+
+
+        public double fx (double x){
+            return Math.exp(x*x);//Integral
         }
 
         @Override
@@ -127,6 +174,52 @@ class Integral4Hilo {
         public double suma() {
             return suma;
         }
-    } // end class HiloSumaImpar
+    } // end class Hilo3SumaImpar
+
+
+
+
+    /**
+     * Hilo4SumaImPar
+     */
+    static class Hilo4SumaImpar extends Thread {
+        private double suma, x0, xn;
+        private long n;
+
+
+
+        Hilo4SumaImpar(String mensaje, double x0, double xn, long n) {
+            super(mensaje);
+            suma = 0;
+            this.x0 = x0;
+            this.xn = xn;
+            this.n = n;
+        }
+
+
+        public double fx (double x){
+            return Math.exp(x*x);//Integral
+        }
+
+        @Override
+        public void run() {
+            double xi, h;
+            h = (xn-x0)/n;
+
+            for (int i = 1; i <= n-1; i += 2) {
+                xi = x0 + i *h;
+                suma += fx(xi);
+            }
+            suma= suma*4;
+
+
+            System.out.println(getName() + ":" + suma);
+            System.out.println("Hilo finalizado: " + getName());
+        }
+
+        public double suma() {
+            return suma;
+        }
+    } // end class Hilo4SumaImpar
 
 } // end class Main
