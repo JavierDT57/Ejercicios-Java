@@ -4,7 +4,7 @@
  */
  //Aca se ingresa la integral a realizar
  
-class Integral4Hilo {
+ class Integral4Hilo {
     public static double fx (double x){
         return Math.exp(x*x);//Integral
      }
@@ -13,15 +13,15 @@ class Integral4Hilo {
         double suma, x0, xn, h;
         long n;// Se cambio el tipo de dato de n a long al igual en el constructor de los hilos
         x0 = 1;
-        xn = 2;
+        xn = 3;
         n = (long) (Math.pow(2, 32) / 2);//Se cambia el valor de n, al solicitado por el profesor
         h = (xn-x0)/n;
         //Hilos par
         Hilo1SumaPar hilo1 = new Hilo1SumaPar("Par", x0, xn, n);
-        Hilo2SumaPar hilo2 = new Hilo2SumaPar("Par2", x0, xn, n);
+        Hilo2SumaPar hilo2 = new Hilo2SumaPar("Par", x0, xn, n);
         //Hilos impar
         Hilo3SumaImpar hilo3 = new Hilo3SumaImpar("Impar", x0, xn, n);
-        Hilo4SumaImpar hilo4 = new Hilo4SumaImpar("Impar2", x0, xn, n);
+        Hilo4SumaImpar hilo4 = new Hilo4SumaImpar("Impar", x0, xn, n);
 
         hilo1.start();
         hilo2.start();
@@ -68,7 +68,7 @@ class Integral4Hilo {
             double xi, h;
             h = (xn-x0)/n;
 
-            for (int i = 2; i <= n-2; i += 2) {
+            for (long i = 2; i <= ((n-2)/2); i += 2) {
                 xi = x0 + i *h;
                 suma += fx(xi);
             }
@@ -113,7 +113,7 @@ class Integral4Hilo {
             double xi, h;
             h = (xn-x0)/n;
 
-            for (int i = 2; i <= n-2; i += 2) {
+            for (long i = ((n-2)/2)+2; i <= (n-2); i += 2) {
                 xi = x0 + i *h;
                 suma += fx(xi);
             }
@@ -160,7 +160,7 @@ class Integral4Hilo {
             double xi, h;
             h = (xn-x0)/n;
 
-            for (int i = 1; i <= n-1; i += 2) {
+            for (long i = 1; i <= ((n-1)/2); i += 2) {
                 xi = x0 + i *h;
                 suma += fx(xi);
             }
@@ -206,7 +206,7 @@ class Integral4Hilo {
             double xi, h;
             h = (xn-x0)/n;
 
-            for (int i = 1; i <= n-1; i += 2) {
+            for (long i = ((n-1)/2)+2; i <= n-1; i += 2) {
                 xi = x0 + i *h;
                 suma += fx(xi);
             }
