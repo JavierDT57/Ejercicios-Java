@@ -4,7 +4,7 @@
  */
  //Aca se ingresa la integral a realizar
  
-class IntegralHilo {
+class Integral2Hilo {
     public static double fx (double x){
         return x*x+1;
         
