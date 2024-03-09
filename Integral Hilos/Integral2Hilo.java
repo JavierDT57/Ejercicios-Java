@@ -3,6 +3,7 @@
  * Meotodo para resolver una integral mediante el metood de SImpson
  */
  //Aca se ingresa la integral a realizar
+ 
 
  
 class Integral2Hilo {
